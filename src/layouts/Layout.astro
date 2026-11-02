@@ -1,0 +1,144 @@
+---
+import "@/styles/global.css";
+
+/**
+ * Layout.astro - Clean, minimalist global layout for Lawrence Wayne Austin (lwa {dev})
+ * Features a pure white canvas, refined typography spacing, and responsive centered structure.
+ */
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalURL?: string;
+}
+
+const {
+  title = "Lawrence Wayne Austin | lwa {dev}",
+  description = "Minimalist personal developer brand website migrated from WordPress to Astro. Clean code, systems configuration, and creative design.",
+  ogImage = "/og-image.png",
+  canonicalURL: canonicalURLProp,
+} = Astro.props;
+
+const canonicalURL = new URL(
+  canonicalURLProp ?? Astro.url.pathname,
+  Astro.site || "https://lawrencewayneaustin.dev"
+);
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth bg-white text-slate-800 antialiased selection:bg-slate-900 selection:text-white">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content="Lawrence Wayne Austin" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="min-h-screen bg-white text-slate-900 flex flex-col font-sans">
+    <!-- Skip to Content for Accessibility -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-slate-900 text-white rounded text-sm font-medium"
+    >
+      Skip to main content
+    </a>
+
+    <!-- Top Minimalist Navigation Header -->
+    <header class="w-full border-b border-slate-100 bg-white/90 backdrop-blur-md sticky top-0 z-40 transition-colors">
+      <div class="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
+        <!-- Brand Title: Minimalist Home.{dev} -->
+        <a
+          href="/"
+          class="group flex items-center gap-1.5 text-lg font-semibold tracking-tight text-slate-900 hover:text-slate-600 transition-colors"
+        >
+          <span>Home</span>
+          <span class="font-mono text-slate-400 group-hover:text-slate-900 transition-colors font-medium">.{`{dev}`}</span>
+        </a>
+
+        <!-- Centered Navigation Links -->
+        <nav class="hidden sm:flex items-center gap-8 text-sm font-medium text-slate-600">
+          <a href="/#about" class="hover:text-slate-900 transition-colors">About</a>
+          <a href="/#creative-design" class="hover:text-slate-900 transition-colors">Design</a>
+          <a href="/#writing" class="hover:text-slate-900 transition-colors">Writing</a>
+          <a href="/projects" class="hover:text-slate-900 transition-colors">Projects</a>
+          <a href="/github" class="hover:text-slate-900 transition-colors">GitHub</a>
+          <a href="/#contact" class="hover:text-slate-900 transition-colors">Contact</a>
+        </nav>
+
+        <!-- Right Action Button -->
+        <div class="flex items-center gap-3">
+          <a
+            href="mailto:lawrencewayneaustin.dev@outlook.com"
+            class="px-4 py-2 text-xs font-semibold tracking-wide text-slate-900 bg-slate-100 rounded-md hover:bg-slate-900 hover:text-white transition-all duration-200"
+          >
+            Get in Touch
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Centered Main Content Area -->
+    <main id="main-content" class="flex-1 w-full max-w-4xl mx-auto px-6 py-12 md:py-20">
+      <slot />
+    </main>
+
+    <!-- Clean Minimalist Footer -->
+    <footer class="w-full border-t border-slate-100 py-10 bg-white">
+      <div class="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-slate-600 font-medium">lwa {`{dev}`}</span>
+          <span>·</span>
+          <span>&copy; {new Date().getFullYear()} Lawrence Wayne Austin</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="https://x.com/lwa_dev" target="_blank" rel="noopener noreferrer" class="hover:text-slate-800 transition-colors">X</a>
+          <a href="https://www.facebook.com/LWA.DevMedia" target="_blank" rel="noopener noreferrer" class="hover:text-slate-800 transition-colors">Facebook</a>
+          <a href="https://www.instagram.com/lwa.dev/" target="_blank" rel="noopener noreferrer" class="hover:text-slate-800 transition-colors">Instagram</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  /* Outlined typography styles for bespoke branding */
+  .outlined-text {
+    -webkit-text-stroke: 1.5px currentColor;
+    color: transparent;
+    letter-spacing: 0.08em;
+    transition: all 0.3s ease;
+  }
+  .outlined-text:hover {
+    color: currentColor;
+    -webkit-text-stroke: 1.5px transparent;
+  }
+</style>
